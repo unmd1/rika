@@ -1,7 +1,8 @@
 import recon
-
+import dict
 rc=recon.recon(prjID="1")
 subs = rc.mysql_show("SELECT `address` from `subs`")
+dik = dict.dic_to_list(subs,"address")
 final_subs = {}
 values=[]
 values_ = []
@@ -39,8 +40,6 @@ for final_sub in final_subs:
     if final_subs[final_sub] > 3 :
         for values_2 in values:
             outputs.append(final_sub.replace("*",values_2[0]))
-
-
+outputs = set(outputs) - set(dik)
 for output in outputs:
-    if not output in str(subs):
-        print(output)
+    print(output)

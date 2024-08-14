@@ -1,6 +1,5 @@
 import sys
 import recon
-import pipreqs
 
 query = sys.argv[1].replace("_"," ")
 row = sys.argv[2]
