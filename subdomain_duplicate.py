@@ -188,6 +188,6 @@ for sub in subs:
     outputs.extend(extend_subdomain(address))
 
 outputs = list(set(outputs))
-print(len(outputs))
-# for output in outputs:
-#     print(output)
+
+for output in outputs:
+    print(output)
