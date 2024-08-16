@@ -1,14 +1,6 @@
-import recon
-import dict
 import re
 import string
 from collections import deque
-
-#############functions#################
-
-
-
-
 def extend_subdomain(subdomain):
     # Regex to find a pattern like 'a100' (single alphabet followed by digits)
     match = re.search(r'\b([a-zA-Z])(\d*)\b', subdomain)
@@ -76,6 +68,13 @@ def replace_digits_non_recursive(input_string_0):
     
     return results
 
+# Test the function
+outputs = []
+subdomain = "a.mio.example.com"
+outputs.extend(extend_subdomain(subdomain))
+# Display results
+for item in outputs:
+    print(item)
 
 
 
@@ -95,99 +94,3 @@ def replace_digits_non_recursive(input_string_0):
 
 
 
-
-
-def sub_smart(subs):
-
-    dik = dict.dic_to_list(subs,"address")
-    final_subs = {}
-    values=[]
-    outputs=[]
-    insert_to_wordlist = False
-    for sub in subs:
-        sub_org = sub["address"].replace("www.","").lstrip('.')
-
-        if "." in sub_org and len(sub_org.split("."))>3:
-            sub_dots = sub_org.split(".")
-
-            for i in range(0,len(sub_dots)-2):
-
-                sub_dots_temp = sub_org.split(".")
-
-
-                sub_dash = sub_dots_temp[i].split("-")
-
-                for i2 in range(0,len(sub_dash)):
-
-                    sub_dash_temp = sub_org.split(".")[i].split("-")
-
-                    value= [sub_dash_temp[i2],"subdomain_duplicate.py",rc.prjname,"","","","","","subdomain_duplicate",rc.prjname]
-                    if not value in values:
-                        values.append(value)
-
-                    sub_dash_temp[i2]="*"
-                    sub_dots_temp[i]="-".join(sub_dash_temp)
-                    final = ".".join(sub_dots_temp)
-
-
-                    if not final in final_subs:
-                        final_subs.update({final:1})
-                    else:
-                        final_subs[final]+=1
-
-
-    if insert_to_wordlist:
-        rc.mysql_insert_to_many(rc.value_wordlist(),values,"wordlist")
-
-
-    for final_sub in final_subs:
-        if final_subs[final_sub] > 3:
-            for values_2 in values:
-                outputs.append(final_sub.replace("*",values_2[0]))
-    outputs = list(set(outputs) - set(dik))
-    return outputs
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-#############functions#################
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-outputs=[]
-rc=recon.recon(prjID="1")
-subs = rc.mysql_show("SELECT `address` from `subs`")
-outputs = sub_smart(subs)
-for sub in subs:
-    address = sub["address"]
-    outputs.extend(extend_subdomain(address))
-
-outputs = list(set(outputs))
-print(len(outputs))
-# for output in outputs:
-#     print(output)
