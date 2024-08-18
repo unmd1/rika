@@ -292,7 +292,7 @@ class recon:
             # print("insert Successfully!")
             pass
         else:
-            print("insert Failed!")
+            # print("insert Failed!")
             return "false"
         return "true"
 
@@ -314,7 +314,8 @@ class recon:
             # print("insert Successfully!")
             pass
         else:
-            print("insert Failed!")
+            # print("insert Failed!")
+            pass
 
 
     def value_directory(self):
@@ -469,10 +470,12 @@ class recon:
 
     def crtsh(self,scope,silent=True):
         crt_result  = self.s_get("https://crt.sh/?q="+ scope["address"] +"&output=json")
-        print(crt_result.text)
+        # print(crt_result.text)
         URLs=self.geturltxt(crt_result.text,scope)
         for URL in URLs:
             for URL_0 in URL.split(" "):
+                if str(URL_0).startswith("."):
+                    URL_0 = URL_0[1:]
                 self.insert_subs(URL_0,scope["id"],URL_0+"crt.sh","test","justFind","rika","crt.sh",self.prjname)
                 print(URL_0)
 

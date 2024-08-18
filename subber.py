@@ -26,12 +26,13 @@ import sys
 # print(geturltxt('',''))
 # src_directory = r"H:\HUNT\tikkie\httpx"
 project_address = sys.argv[1]
-rc = recon.recon(prjID="1")
+rc = recon.recon(prjID="3")
 # for scope in rc.scopes:
 #     print(scope)
 #     rc.subfinder(scope)
 #     rc.crtsh(scope)
-# 
-rc.run_command_json("python stdout.py SELECT_-address-_FROM_-subs- address | httpx -silent -j -irrb -srd " + project_address)
+
+rc.run_command_json("python stdout.py SELECT_-address-_FROM_-subs-_WHERE_-prj-_=_!"+ rc.prjname +"! address | httpx -silent -j -irrb -srd " + project_address)
+# rc.run_command_json("python stdout.py SELECT_-address-_FROM_-subs-_WHERE_-prj-_=_!"+ rc.prjname +"! address | httpx -silent -j -irrb -srd " + project_address)
 
 

@@ -122,7 +122,7 @@ def sub_smart(subs):
                     sub_dash_temp = sub_org.split(".")[i].split("-")
 
                     value= [sub_dash_temp[i2],"subdomain_duplicate.py",rc.prjname,"","","","","","subdomain_duplicate",rc.prjname]
-                    if not value in values:
+                    if not value in values and not "www" == value :
                         values.append(value)
 
                     sub_dash_temp[i2]="*"
@@ -141,7 +141,7 @@ def sub_smart(subs):
 
 
     for final_sub in final_subs:
-        if final_subs[final_sub] > 3:
+        if final_subs[final_sub] > hardness:
             for values_2 in values:
                 outputs.append(final_sub.replace("*",values_2[0]))
     outputs = list(set(outputs) - set(dik))
@@ -178,14 +178,16 @@ def sub_smart(subs):
 
 
 
-
+hardness = 3
 outputs=[]
 rc=recon.recon(prjID="1")
 subs = rc.mysql_show("SELECT `address` from `subs`")
 outputs = sub_smart(subs)
 for sub in subs:
     address = sub["address"]
-    outputs.extend(extend_subdomain(address))
+    new_outputs = extend_subdomain(address)
+    new_outputs.remove(address)
+    outputs.extend(new_outputs)
 
 outputs = list(set(outputs))
 

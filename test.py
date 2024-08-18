@@ -70,7 +70,7 @@ def replace_digits_non_recursive(input_string_0):
 
 # Test the function
 outputs = []
-subdomain = "a.mio.example.com"
+subdomain = "c.mio.example.com"
 outputs.extend(extend_subdomain(subdomain))
 # Display results
 for item in outputs:
