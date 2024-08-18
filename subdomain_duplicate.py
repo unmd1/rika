@@ -2,6 +2,7 @@ import recon
 import dict
 import re
 import string
+import sys
 from collections import deque
 
 #############functions#################
@@ -182,6 +183,10 @@ hardness = 3
 outputs=[]
 rc=recon.recon(prjID="1")
 subs = rc.mysql_show("SELECT `address` from `subs`")
+
+startfrom = sys.argv[1]
+limit = sys.argv[2]
+
 outputs = sub_smart(subs)
 for sub in subs:
     address = sub["address"]
@@ -191,5 +196,5 @@ for sub in subs:
 
 outputs = list(set(outputs))
 
-for output in outputs:
+for output in outputs[int(startfrom):int(limit)]:
     print(output)
