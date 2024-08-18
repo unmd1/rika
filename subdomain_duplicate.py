@@ -182,7 +182,7 @@ def sub_smart(subs):
 hardness = 3
 outputs=[]
 rc=recon.recon(prjID="1")
-subs = rc.mysql_show("SELECT `address` from `subs`")
+subs = rc.mysql_show("SELECT `address` from `subs` WHERE `prj` = '" + rc.prjname + "'")
 
 startfrom = sys.argv[1]
 limit = sys.argv[2]
