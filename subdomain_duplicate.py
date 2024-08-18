@@ -70,7 +70,7 @@ def replace_digits_non_recursive(input_string_0):
             # جایگزینی عدد با همه اعداد ممکن (0 تا 9)
             for i in range(10):
                 new_string = current_string[:pos] + str(i) + current_string[pos+1:]
-                queue.append(new_string)
+                queue.append(new_string.strip())
     
     # تبدیل صف به لیست و برگرداندن آن
     results.extend(queue)
@@ -144,7 +144,7 @@ def sub_smart(subs):
     for final_sub in final_subs:
         if final_subs[final_sub] > hardness:
             for values_2 in values:
-                outputs.append(final_sub.replace("*",values_2[0]))
+                outputs.append(final_sub.replace("*",values_2[0]).strip())
     outputs = list(set(outputs))
     return outputs
 

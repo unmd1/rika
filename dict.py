@@ -45,7 +45,7 @@ def unique(dic):
 def dic_to_list(dic,key):
     out_list = []
     for dic_v in dic:
-        out_list.append(dic_v[key])
+        out_list.append(dic_v[key].replace("\n","").replace("\\n",""))
     return out_list
 
 def is_list_in_string(list_1,str_1):
