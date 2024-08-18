@@ -181,7 +181,8 @@ def sub_smart(subs):
 
 hardness = 3
 outputs=[]
-rc=recon.recon(prjID="1")
+prjid = sys.argv[3]
+rc=recon.recon(prjID=prjid)
 subs = rc.mysql_show("SELECT `address` from `subs` WHERE `prj` = '" + rc.prjname + "'")
 
 startfrom = sys.argv[1]
@@ -195,6 +196,7 @@ for sub in subs:
     outputs.extend(new_outputs)
 
 outputs = list(set(outputs))
-
+if limit == "0":
+    limit=len(outputs)-int(startfrom)
 for output in outputs[int(startfrom):int(limit)]:
     print(output)
