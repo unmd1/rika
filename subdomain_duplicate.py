@@ -100,7 +100,7 @@ def replace_digits_non_recursive(input_string_0):
 
 def sub_smart(subs):
 
-    dik = dict.dic_to_list(subs,"address")
+    
     final_subs = {}
     values=[]
     outputs=[]
@@ -145,7 +145,7 @@ def sub_smart(subs):
         if final_subs[final_sub] > hardness:
             for values_2 in values:
                 outputs.append(final_sub.replace("*",values_2[0]))
-    outputs = list(set(outputs) - set(dik))
+    outputs = list(set(outputs))
     return outputs
 
 
@@ -196,6 +196,8 @@ for sub in subs:
     outputs.extend(new_outputs)
 
 outputs = list(set(outputs))
+dik = dict.dic_to_list(subs,"address")
+outputs = list(set(outputs) - set(dik))
 if limit == "0":
     limit=len(outputs)-int(startfrom)
 for output in outputs[int(startfrom):int(limit)]:
