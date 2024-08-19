@@ -453,13 +453,25 @@ class recon:
         with os.popen(command) as pse:
             for line in pse:
                 pass
-
+    
+    def run_command_return(self,command):
+        lines=[]
+        with os.popen(command) as pse:
+            for line in pse:
+                lines.append(line)
+        return lines
 
 ###################
 ###### Main  ######
 ###################
 
 
+    def forbidden_solve(self,url):
+        outputs = self.run_command_return("./bypass-403.sh " + url)
+        for output in outputs:
+            if "200," in output:
+                print(output)
+            
 
     def subfinder(self,scope,silent=True):
         params = []
