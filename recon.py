@@ -469,7 +469,7 @@ class recon:
     def forbidden_solve(self,url):
         outputs = self.run_command_return("./bypass-403.sh " + url)
         for output in outputs:
-            if not "403" in output and "->" in output:
+            if "200," in output:
                 print(output)
             
 
