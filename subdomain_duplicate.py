@@ -190,9 +190,13 @@ limit = sys.argv[2]
 
 outputs = sub_smart(subs)
 for sub in subs:
-    address = sub["address"]
+    address = sub["address"].strip()
     new_outputs = extend_subdomain(address)
-    new_outputs.remove(address)
+    try:
+        new_outputs.remove(address)
+    except:
+        pass
+    
     outputs.extend(new_outputs)
 
 outputs = list(set(outputs))
