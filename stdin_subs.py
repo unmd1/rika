@@ -1,10 +1,9 @@
 import sys
 import recon
 import dict
-rc = recon.recon(prjID="1")
+rc = recon.recon(prjID="4")
 all_subs = rc.mysql_show("SELECT `address` FROM `subs`")
 allio = dict.dic_to_list(all_subs,"address")
-print(allio)
 for line in sys.stdin:
     
     line = line.replace("http://","").replace("https://","").replace("www.","").replace("/","").strip()

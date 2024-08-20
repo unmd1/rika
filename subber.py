@@ -26,13 +26,13 @@ import sys
 # print(geturltxt('',''))
 # src_directory = r"H:\HUNT\tikkie\httpx"
 project_address = sys.argv[1]
-rc = recon.recon(prjID="1")
+project_id = sys.argv[2]
+rc = recon.recon(prjID=project_id)
 for scope in rc.scopes:
     print(scope)
     rc.subfinder(scope)
     rc.crtsh(scope)
 
 rc.run_command_json("python3 stdout.py SELECT_-address-_FROM_-subs-_WHERE_-prj-_=_!"+ rc.prjname +"! address | httpx -silent -j -irrb -srd " + project_address)
-rc.run_command2("python3 subdomain_duplicate.py 0 0 1 | dnsx -silent | httpx -silent | python3 stdin_subs.py")
-
+rc.run_command2("python3 subdomain_duplicate.py 0 0 4 | dnsx -silent | httpx -silent | python3 stdin_subs.py")
 
