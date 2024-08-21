@@ -1,6 +1,6 @@
 import recon
 import json
-prjID = "1"
+prjID = "5"
 rc = recon.recon(prjID=prjID)
 query = "SELECT `result` FROM `subs` WHERE `prj` = '" + rc.prjname +r"' and `result` LIKE '%forbidden%'"
 urls=[]
