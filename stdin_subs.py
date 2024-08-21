@@ -1,7 +1,7 @@
 import sys
 import recon
 import dict
-rc = recon.recon(prjID="4")
+rc = recon.recon(prjID="5")
 all_subs = rc.mysql_show("SELECT `address` FROM `subs`")
 allio = dict.dic_to_list(all_subs,"address")
 for line in sys.stdin:

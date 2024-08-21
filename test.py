@@ -1,96 +1,51 @@
-import re
-import string
-from collections import deque
-def extend_subdomain(subdomain):
-    # Regex to find a pattern like 'a100' (single alphabet followed by digits)
-    match = re.search(r'\b([a-zA-Z])(\d*)\b', subdomain)
-    
-    if match:
-        # List to hold all possible subdomains
-        results = []
-        
-        # Capture the single alphabet and the digits
-        alphabet = match.group(1)
-        digits = match.group(2)
-        
-        # The position of the match in the subdomain
-        start_pos = match.start()
-        end_pos = match.end()
-        
-        # Replace the single alphabet with all possible alphabets
-        for char in string.ascii_lowercase:  # 'a' to 'z'
-            new_subdomain = subdomain[:start_pos] + char + digits + subdomain[end_pos:]
-            results.extend(replace_digits_non_recursive(new_subdomain))
-            
-        return results
-    else:
-        # If no such pattern is found, return the original subdomain
-        return replace_digits_non_recursive(subdomain)
+import requests
 
+cookies = {
+    'XSRF-TOKEN': '8349242e-c0a1-46ee-8582-7d0aae2b705e',
+    'csrf-state': '""',
+    'csrf-state-legacy': '""',
+    'cognito-fl': '"W10="',
+}
 
+headers = {
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7',
+    'accept-language': 'en-US,en;q=0.9,fa;q=0.8,fa-IR;q=0.7,ar;q=0.6',
+    'cache-control': 'no-cache',
+    'content-type': 'application/x-www-form-urlencoded',
+    # 'cookie': 'XSRF-TOKEN=8349242e-c0a1-46ee-8582-7d0aae2b705e; csrf-state=""; csrf-state-legacy=""; cognito-fl="W10="',
+    'origin': 'https://loan-monitor.auth.eu-west-1.amazoncognito.com',
+    'pragma': 'no-cache',
+    'priority': 'u=0, i',
+    'referer': 'https://loan-monitor.auth.eu-west-1.amazoncognito.com/login?redirect_uri=https%3A%2F%2Fmonitor.loan.oaknorth.co.uk%2F&response_type=token&client_id=6dflioai9fuvjtcolmojaceigs&identity_provider=COGNITO&scope=&state=SHQiK6zKHSKxcqQ2FQ9eXnetdMGl6s1R',
+    'sec-fetch-dest': 'document',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-site': 'same-origin',
+    'sec-fetch-user': '?1',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (iPhone; CPU iPhone OS 16_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/16.6 Mobile/15E148 Safari/604.1',
+}
 
+params = {
+    'redirect_uri': 'https://monitor.loan.oaknorth.co.uk/',
+    'response_type': 'token',
+    'client_id': '6dflioai9fuvjtcolmojaceigs',
+    'identity_provider': 'COGNITO',
+    'scope': '',
+    'state': 'SHQiK6zKHSKxcqQ2FQ9eXnetdMGl6s1R',
+}
 
+data = {
+    '_csrf': '8349242e-c0a1-46ee-8582-7d0aae2b705e',
+    'username': 'admin',
+    'password': 'admin',
+    'cognitoAsfData': 'eyJwYXlsb2FkIjoie1wiY29udGV4dERhdGFcIjp7XCJVc2VyQWdlbnRcIjpcIk1vemlsbGEvNS4wIChpUGhvbmU7IENQVSBpUGhvbmUgT1MgMTZfNiBsaWtlIE1hYyBPUyBYKSBBcHBsZVdlYktpdC82MDUuMS4xNSAoS0hUTUwsIGxpa2UgR2Vja28pIFZlcnNpb24vMTYuNiBNb2JpbGUvMTVFMTQ4IFNhZmFyaS82MDQuMVwiLFwiRGV2aWNlSWRcIjpcIjhsMW40ejYxNm5xaHJpZnZscHhyOjE3MjQyMTQ1MDA3MTVcIixcIkRldmljZUxhbmd1YWdlXCI6XCJlbi1VU1wiLFwiRGV2aWNlRmluZ2VycHJpbnRcIjpcIk1vemlsbGEvNS4wIChpUGhvbmU7IENQVSBpUGhvbmUgT1MgMTZfNiBsaWtlIE1hYyBPUyBYKSBBcHBsZVdlYktpdC82MDUuMS4xNSAoS0hUTUwsIGxpa2UgR2Vja28pIFZlcnNpb24vMTYuNiBNb2JpbGUvMTVFMTQ4IFNhZmFyaS82MDQuMWVuLVVTXCIsXCJEZXZpY2VQbGF0Zm9ybVwiOlwiV2luMzJcIixcIkNsaWVudFRpbWV6b25lXCI6XCIuNTozMFwifSxcInVzZXJuYW1lXCI6XCJtaW93JTI2JTIzeDIyJTNCXCIsXCJ1c2VyUG9vbElkXCI6XCJcIixcInRpbWVzdGFtcFwiOlwiMTcyNDIxNDUyMDI1NlwifSIsInNpZ25hdHVyZSI6IlB2TjVXMzg1aXlsOTV1cnVpMGdMUXd2MGpmcHE2d0NQWEZZdkh1SDN4Vk09IiwidmVyc2lvbiI6IkpTMjAxNzExMTUifQ==',
+}
 
-
-
-
-def replace_digits_non_recursive(input_string_0):
-    input_string = ".".join(input_string_0.split(".")[:-2])
-    digit_positions = [m.start() for m in re.finditer(r'\d', input_string)]
-    if len(digit_positions) > 3 :
-        digit_positions = digit_positions[-3:]
-
-    if not digit_positions:
-        return [input_string_0]
-    
-    # صف برای نگهداری رشته‌ها
-    queue = deque([input_string_0])
-    
-    # لیستی برای ذخیره نتایج
-    results = []
-    
-    # پردازش هر موقعیت عدد
-    for pos in digit_positions:
-        # تعداد فعلی رشته‌ها در صف
-        current_length = len(queue)
-        
-        # تکرار روی همه رشته‌های موجود در صف
-        for _ in range(current_length):
-            current_string = queue.popleft()
-            
-            # جایگزینی عدد با همه اعداد ممکن (0 تا 9)
-            for i in range(10):
-                new_string = current_string[:pos] + str(i) + current_string[pos+1:]
-                queue.append(new_string)
-    
-    # تبدیل صف به لیست و برگرداندن آن
-    results.extend(queue)
-    
-    return results
-
-# Test the function
-outputs = []
-subdomain = "c.mio.example.com"
-outputs.extend(extend_subdomain(subdomain))
-# Display results
-for item in outputs:
-    print(item)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+response = requests.post(
+    'https://loan-monitor.auth.eu-west-1.amazoncognito.com/login',
+    params=params,
+    cookies=cookies,
+    headers=headers,
+    data=data,
+)
+print(response.text)
